@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-deployment
+  labels:
+    app: test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: test
+  template:
+    metadata:
+      labels:
+        app: test
+    spec:
+      containers:
+      - name: test-deployment-local
+        image: skmdrafi9492/jenkinstest
+        ports:
+        - containerPort: 80
+kind: Service
+apiVersion: v1
+metadata:
+  name: test-deployment-service
+spec:
+  selector:
+      app: test
+  ports: 
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+    nodePort: 30001
+  type: NodePort
+
